@@ -3,26 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'register.dart';
 import 'package:flutter/gestures.dart';
-import 'registergeneral.dart';
 
 void main() {
   runApp(new MaterialApp(
     title: "Device Monitoring",
-    home: new Register(),
+    home: new Registergeneral(),
   ));
 }
 
-class Register extends StatefulWidget {
+class Registergeneral extends StatefulWidget {
   @override
-  _Register createState() => new _Register();
+  _Registergeneral createState() => new _Registergeneral();
 }
 
 // Handling Text Input
-class _Register extends State<Register> {
-  TextEditingController controllerEmail = TextEditingController();
-  TextEditingController controllerBirthday = TextEditingController();
-  TextEditingController controllerGender = TextEditingController();
+class _Registergeneral extends State<Registergeneral> {
+  TextEditingController controllerName = TextEditingController();
+  TextEditingController controllerAlamat = TextEditingController();
+  TextEditingController controllerId = TextEditingController();
+  TextEditingController controllerUsername = TextEditingController();
+  TextEditingController controllerPassword = TextEditingController();
+  TextEditingController controllerHp = TextEditingController();
+  bool checkdosen = false;
+  bool checkmahas = false;
+  Color transparant = Color.fromARGB(0, 255, 255, 255);
+  Color pnl = Color.fromARGB(255, 254, 202, 10);
 
   // Backend PHP
   StartLogin() async {
@@ -31,9 +38,12 @@ class _Register extends State<Register> {
     // Manggil Value Database
 
     final response = await http.post(Uri.parse(url), body: {
-      "username": controllerEmail.text,
-      "password": controllerBirthday.text,
-      "gender": controllerGender.text
+      "nama": controllerName.text,
+      "alamat": controllerAlamat.text,
+      "id": controllerId.text,
+      "username": controllerUsername.text,
+      "password": controllerPassword.text,
+      "NoHp": controllerHp.text
     });
     var jsondata = json.decode(response.body);
   }
@@ -55,22 +65,48 @@ class _Register extends State<Register> {
                   children: <Widget>[
                 Container(
                   width: 10,
-                  height: 150,
+                  height: 120,
                   color: Color.fromARGB(0, 255, 255, 255),
                 ),
                 Container(
-                  width: 330,
-                  height: 30,
-                  color: Color.fromARGB(0, 255, 255, 255),
-                  child: Text(
-                    "What's Your E-Mail",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                ),
+                    width: 330,
+                    height: 50,
+                    decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 254, 202, 10)),
+                        borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(75.0),
+                          topRight: const Radius.circular(75.0),
+                          bottomLeft: const Radius.circular(75.0),
+                          bottomRight: const Radius.circular(75.0),
+                        )),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 25,
+                          height: 20,
+                          color: Color.fromARGB(0, 255, 255, 255),
+                        ),
+                        Container(
+                          width: 200,
+                          height: 60,
+                          color: Color.fromARGB(0, 0, 0, 0),
+                          child: TextField(
+                            controller: controllerName,
+                            decoration: InputDecoration(
+                              // label: 'username',
+                              border: InputBorder.none,
+                              hintText: 'Nama',
+                              hintStyle: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontSize: 15,
+                                  height: 2.4),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
                 Container(
                   width: 10,
                   height: 20,
@@ -101,11 +137,11 @@ class _Register extends State<Register> {
                           height: 60,
                           color: Color.fromARGB(0, 0, 0, 0),
                           child: TextField(
-                            controller: controllerEmail,
+                            controller: controllerAlamat,
                             decoration: InputDecoration(
                               // label: 'username',
                               border: InputBorder.none,
-                              hintText: 'E-Mail',
+                              hintText: 'Alamat',
                               hintStyle: TextStyle(
                                   color: Color.fromARGB(255, 0, 0, 0),
                                   fontSize: 15,
@@ -117,45 +153,137 @@ class _Register extends State<Register> {
                     )),
                 Container(
                   width: 10,
-                  height: 15,
+                  height: 20,
                   color: Color.fromARGB(0, 255, 255, 255),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 10,
-                      height: 5,
-                      color: Color.fromARGB(0, 255, 255, 255),
-                    ),
-                    Text(
-                      "When were you born?",
-                      style: TextStyle(
-                        fontSize: 15,
-                        // fontFamily: 'Montserrat',
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      ),
-                    ),
-                    Container(
-                      width: 10,
-                      height: 15,
-                      color: Color.fromARGB(0, 255, 255, 255),
-                    ),
-                    Text(
-                      "Let's find out how old you are.",
-                      style: TextStyle(
-                        fontSize: 15,
-                        // fontFamily: 'Montserrat',
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      ),
-                    ),
-                    Container(
-                      width: 10,
-                      height: 10,
-                      color: Color.fromARGB(0, 255, 255, 255),
-                    )
-                  ],
+                Container(
+                    width: 330,
+                    height: 50,
+                    decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 254, 202, 10)),
+                        borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(75.0),
+                          topRight: const Radius.circular(75.0),
+                          bottomLeft: const Radius.circular(75.0),
+                          bottomRight: const Radius.circular(75.0),
+                        )),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 25,
+                          height: 20,
+                          color: Color.fromARGB(0, 255, 255, 255),
+                        ),
+                        Container(
+                          width: 200,
+                          height: 60,
+                          color: Color.fromARGB(0, 0, 0, 0),
+                          child: TextField(
+                            controller: controllerId,
+                            decoration: InputDecoration(
+                              // label: 'username',
+                              border: InputBorder.none,
+                              hintText: 'NIP/NIM',
+                              hintStyle: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontSize: 15,
+                                  height: 2.4),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                Container(
+                  width: 10,
+                  height: 20,
+                  color: Color.fromARGB(0, 255, 255, 255),
                 ),
+                Container(
+                    width: 330,
+                    height: 50,
+                    decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 254, 202, 10)),
+                        borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(75.0),
+                          topRight: const Radius.circular(75.0),
+                          bottomLeft: const Radius.circular(75.0),
+                          bottomRight: const Radius.circular(75.0),
+                        )),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 25,
+                          height: 20,
+                          color: Color.fromARGB(0, 255, 255, 255),
+                        ),
+                        Container(
+                          width: 200,
+                          height: 60,
+                          color: Color.fromARGB(0, 0, 0, 0),
+                          child: TextField(
+                            controller: controllerUsername,
+                            decoration: InputDecoration(
+                              // label: 'username',
+                              border: InputBorder.none,
+                              hintText: 'Username',
+                              hintStyle: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontSize: 15,
+                                  height: 2.4),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                Container(
+                  width: 10,
+                  height: 20,
+                  color: Color.fromARGB(0, 255, 255, 255),
+                ),
+                Container(
+                    width: 330,
+                    height: 50,
+                    decoration: new BoxDecoration(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        border: Border.all(
+                            color: Color.fromARGB(255, 254, 202, 10)),
+                        borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(75.0),
+                          topRight: const Radius.circular(75.0),
+                          bottomLeft: const Radius.circular(75.0),
+                          bottomRight: const Radius.circular(75.0),
+                        )),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 25,
+                          height: 20,
+                          color: Color.fromARGB(0, 255, 255, 255),
+                        ),
+                        Container(
+                          width: 200,
+                          height: 60,
+                          color: Color.fromARGB(0, 0, 0, 0),
+                          child: TextField(
+                            controller: controllerPassword,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              // label: 'username',
+                              border: InputBorder.none,
+                              hintText: 'Password',
+                              hintStyle: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontSize: 15,
+                                  height: 2.4),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
                 Container(
                   width: 10,
                   height: 20,
@@ -186,57 +314,11 @@ class _Register extends State<Register> {
                           height: 60,
                           color: Color.fromARGB(0, 0, 0, 0),
                           child: TextField(
-                            controller: controllerBirthday,
+                            controller: controllerHp,
                             decoration: InputDecoration(
                               // label: 'username',
                               border: InputBorder.none,
-                              hintText: 'Birthday',
-                              hintStyle: TextStyle(
-                                  // fontFamily: 'Montserrat',
-                                  // fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                  fontSize: 15,
-                                  height: 2.4),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
-                Container(
-                  width: 25,
-                  height: 20,
-                  color: Color.fromARGB(0, 255, 255, 255),
-                ),
-                Container(
-                    width: 330,
-                    height: 50,
-                    decoration: new BoxDecoration(
-                        border: Border.all(
-                            color: Color.fromARGB(255, 254, 202, 10)),
-                        color: Color.fromARGB(0, 230, 230, 230),
-                        borderRadius: new BorderRadius.only(
-                          topLeft: const Radius.circular(75.0),
-                          topRight: const Radius.circular(75.0),
-                          bottomLeft: const Radius.circular(75.0),
-                          bottomRight: const Radius.circular(75.0),
-                        )),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 25,
-                          height: 20,
-                          color: Color.fromARGB(0, 255, 255, 255),
-                        ),
-                        Container(
-                          width: 200,
-                          height: 60,
-                          color: Color.fromARGB(0, 0, 0, 0),
-                          child: TextField(
-                            controller: controllerGender,
-                            decoration: InputDecoration(
-                              // label: 'username',
-                              border: InputBorder.none,
-                              hintText: 'Gender',
+                              hintText: 'No Hp',
                               hintStyle: TextStyle(
                                   // fontFamily: 'Montserrat',
                                   // fontWeight: FontWeight.bold,
@@ -250,7 +332,7 @@ class _Register extends State<Register> {
                     )),
                 Container(
                   width: 10,
-                  height: 40,
+                  height: 20,
                   color: Color.fromARGB(0, 255, 0, 0),
                 ),
                 Row(
@@ -258,17 +340,53 @@ class _Register extends State<Register> {
                     Container(
                       width: 25,
                       height: 10,
-                      color: Color.fromARGB(0, 255, 0, 0),
+                      color: transparant,
                     ),
+                    Theme(
+                        data: Theme.of(context)
+                            .copyWith(unselectedWidgetColor: pnl),
+                        child: Checkbox(
+                            checkColor: pnl,
+                            value: checkdosen,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                checkdosen = value!;
+                              });
+                            })),
                     Text(
                       "DOSEN",
                       style: TextStyle(
                           // fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(0, 254, 202, 10),
+                          color: Color.fromARGB(255, 0, 0, 0),
                           fontSize: 17,
                           height: 0),
                     ),
+                    Container(
+                      width: 60,
+                      height: 10,
+                      color: transparant,
+                    ),
+                    Theme(
+                        data: Theme.of(context)
+                            .copyWith(unselectedWidgetColor: pnl),
+                        child: Checkbox(
+                            checkColor: pnl,
+                            value: checkmahas,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                checkmahas = value!;
+                              });
+                            })),
+                    Text(
+                      "MAHASISWA/I",
+                      style: TextStyle(
+                          // fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 17,
+                          height: 0),
+                    )
                   ],
                 ),
                 Container(
@@ -294,8 +412,7 @@ class _Register extends State<Register> {
                     onPressed: () async {
                       setState(() {
                         Navigator.of(context).push(new MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                new Registergeneral()));
+                            builder: (BuildContext context) => new Register()));
                       });
                     },
                     child: Text(
