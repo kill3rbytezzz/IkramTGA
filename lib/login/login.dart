@@ -332,7 +332,7 @@ class _Login extends State<Login> {
                             ..onTap = () {
                               Navigator.of(context).push(new MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      new Register()));
+                                      Register()));
                             })
                     ]))
               ])),
