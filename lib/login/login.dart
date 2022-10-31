@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:convert';
-import 'login.dart';
+import '/register/register.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/gestures.dart';
 
@@ -19,7 +17,7 @@ var perms;
 
 class Login extends StatefulWidget {
   @override
-  _Login createState() => new _Login();
+  _Login createState() => _Login();
 }
 
 // Handling Text Input
@@ -28,6 +26,8 @@ class _Login extends State<Login> {
   TextEditingController controllerPsw = TextEditingController();
   bool checkdosen = false;
   bool checkmahas = false;
+  Color transparant = Color.fromARGB(0, 255, 255, 255);
+  Color pnl = Color.fromARGB(255, 254, 202, 10);
 
   // Backend PHP
   StartLogin() async {
@@ -63,18 +63,18 @@ class _Login extends State<Login> {
                 Container(
                   width: 10,
                   height: 100,
-                  color: Color.fromARGB(0, 255, 255, 255),
+                  color: transparant,
                 ),
                 Container(
                   width: 330,
                   height: 30,
-                  color: Color.fromARGB(0, 255, 255, 255),
+                  color: transparant,
                   child: Text(
                     "Sign In",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        color: Color.fromARGB(255, 254, 202, 10),
+                        color: pnl,
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
                   ),
@@ -82,15 +82,14 @@ class _Login extends State<Login> {
                 Container(
                   width: 10,
                   height: 20,
-                  color: Color.fromARGB(0, 255, 255, 255),
+                  color: transparant,
                 ),
                 Container(
                     width: 330,
                     height: 50,
                     decoration: new BoxDecoration(
                         color: Color.fromARGB(255, 255, 255, 255),
-                        border: Border.all(
-                            color: Color.fromARGB(255, 254, 202, 10)),
+                        border: Border.all(color: pnl),
                         borderRadius: new BorderRadius.only(
                           topLeft: const Radius.circular(75.0),
                           topRight: const Radius.circular(75.0),
@@ -102,12 +101,12 @@ class _Login extends State<Login> {
                         Container(
                           width: 25,
                           height: 20,
-                          color: Color.fromARGB(0, 255, 255, 255),
+                          color: transparant,
                         ),
                         Container(
                           width: 200,
                           height: 60,
-                          color: Color.fromARGB(0, 0, 0, 0),
+                          color: transparant,
                           child: TextField(
                             controller: controllerName,
                             decoration: InputDecoration(
@@ -117,7 +116,7 @@ class _Login extends State<Login> {
                               hintStyle: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 254, 202, 10),
+                                  color: pnl,
                                   fontSize: 15,
                                   height: 2.4),
                             ),
@@ -146,15 +145,14 @@ class _Login extends State<Login> {
                 Container(
                   width: 10,
                   height: 5,
-                  color: Color.fromARGB(0, 255, 255, 255),
+                  color: transparant,
                 ),
                 Container(
                     width: 330,
                     height: 50,
                     decoration: new BoxDecoration(
-                        border: Border.all(
-                            color: Color.fromARGB(255, 254, 202, 10)),
-                        color: Color.fromARGB(0, 230, 230, 230),
+                        border: Border.all(color: pnl),
+                        color: transparant,
                         borderRadius: new BorderRadius.only(
                           topLeft: const Radius.circular(75.0),
                           topRight: const Radius.circular(75.0),
@@ -166,12 +164,12 @@ class _Login extends State<Login> {
                         Container(
                           width: 25,
                           height: 20,
-                          color: Color.fromARGB(0, 255, 255, 255),
+                          color: transparant,
                         ),
                         Container(
                           width: 200,
                           height: 60,
-                          color: Color.fromARGB(0, 0, 0, 0),
+                          color: transparant,
                           child: TextField(
                             controller: controllerPsw,
                             decoration: InputDecoration(
@@ -181,7 +179,7 @@ class _Login extends State<Login> {
                               hintStyle: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 254, 202, 10),
+                                  color: pnl,
                                   fontSize: 15,
                                   height: 2.4),
                             ),
@@ -192,21 +190,20 @@ class _Login extends State<Login> {
                 Container(
                   width: 10,
                   height: 40,
-                  color: Color.fromARGB(0, 255, 0, 0),
+                  color: transparant,
                 ),
                 Row(
                   children: <Widget>[
                     Container(
                       width: 25,
                       height: 10,
-                      color: Color.fromARGB(0, 255, 0, 0),
+                      color: transparant,
                     ),
                     Theme(
-                        data: Theme.of(context).copyWith(
-                            unselectedWidgetColor:
-                                Color.fromARGB(255, 254, 202, 10)),
+                        data: Theme.of(context)
+                            .copyWith(unselectedWidgetColor: pnl),
                         child: Checkbox(
-                            checkColor: Color.fromARGB(255, 254, 202, 10),
+                            checkColor: pnl,
                             value: checkdosen,
                             onChanged: (bool? value) {
                               setState(() {
@@ -218,21 +215,20 @@ class _Login extends State<Login> {
                       style: TextStyle(
                           // fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 254, 202, 10),
+                          color: pnl,
                           fontSize: 17,
                           height: 0),
                     ),
                     Container(
                       width: 60,
                       height: 10,
-                      color: Color.fromARGB(0, 255, 0, 0),
+                      color: transparant,
                     ),
                     Theme(
-                        data: Theme.of(context).copyWith(
-                            unselectedWidgetColor:
-                                Color.fromARGB(255, 254, 202, 10)),
+                        data: Theme.of(context)
+                            .copyWith(unselectedWidgetColor: pnl),
                         child: Checkbox(
-                            checkColor: Color.fromARGB(255, 254, 202, 10),
+                            checkColor: pnl,
                             value: checkmahas,
                             onChanged: (bool? value) {
                               setState(() {
@@ -244,7 +240,7 @@ class _Login extends State<Login> {
                       style: TextStyle(
                           // fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 254, 202, 10),
+                          color: pnl,
                           fontSize: 17,
                           height: 0),
                     )
@@ -253,13 +249,13 @@ class _Login extends State<Login> {
                 Container(
                   width: 25,
                   height: 20,
-                  color: Color.fromARGB(0, 255, 0, 0),
+                  color: transparant,
                 ),
                 Container(
                   height: 50,
                   width: 300,
                   decoration: new BoxDecoration(
-                      color: Color.fromARGB(255, 254, 202, 10),
+                      color: pnl,
                       borderRadius: new BorderRadius.only(
                         topLeft: const Radius.circular(75.0),
                         topRight: const Radius.circular(75.0),
@@ -302,7 +298,7 @@ class _Login extends State<Login> {
                 Container(
                   width: 25,
                   height: 20,
-                  color: Color.fromARGB(0, 255, 0, 0),
+                  color: transparant,
                 ),
                 Text(
                   "Or",
@@ -315,7 +311,7 @@ class _Login extends State<Login> {
                 Container(
                   width: 25,
                   height: 30,
-                  color: Color.fromARGB(0, 255, 0, 0),
+                  color: transparant,
                 ),
                 RichText(
                     text: TextSpan(
@@ -330,13 +326,13 @@ class _Login extends State<Login> {
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 15,
-                            color: Color.fromARGB(255, 254, 202, 10),
+                            color: pnl,
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.of(context).push(new MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      new Login()));
+                                      new Register()));
                             })
                     ]))
               ])),

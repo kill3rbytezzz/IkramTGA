@@ -75,10 +75,7 @@ flutter:
           weight: 700
 
   assets:
-    - assets/Login.png
-    - assets/ListJob.png
-    - assets/addjobhosting.png
-    - assets/addjobrepair.png
+    - assets/Background.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
