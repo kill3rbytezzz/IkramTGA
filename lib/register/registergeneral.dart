@@ -1,17 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:ikramtga/login/login.dart';
 import 'register.dart';
-import 'package:flutter/gestures.dart';
+import 'registerphoto.dart';
 
-void main() {
-  runApp(new MaterialApp(
-    title: "Device Monitoring",
-    home: new Registergeneral(),
-  ));
-}
+// void main() {
+//   runApp(new MaterialApp(
+//     title: "Device Monitoring",
+//     home: new Registergeneral(),
+//   ));
+// }
 
 class Registergeneral extends StatefulWidget {
   @override
@@ -32,12 +31,15 @@ class _Registergeneral extends State<Registergeneral> {
   Color pnl = Color.fromARGB(255, 254, 202, 10);
 
   // Backend PHP
-  StartLogin() async {
-    String url = "http://localhost/login.php";
+  StartRegister() async {
+    String url = "http://localhost/register.php";
 
     // Manggil Value Database
 
     final response = await http.post(Uri.parse(url), body: {
+      "email": Email,
+      "birthday": Birthday,
+      "gender": Gender,
       "nama": controllerName.text,
       "alamat": controllerAlamat.text,
       "id": controllerId.text,
@@ -336,12 +338,8 @@ class _Registergeneral extends State<Registergeneral> {
                   color: Color.fromARGB(0, 255, 0, 0),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      width: 25,
-                      height: 10,
-                      color: transparant,
-                    ),
                     Theme(
                         data: Theme.of(context)
                             .copyWith(unselectedWidgetColor: pnl),
@@ -351,6 +349,7 @@ class _Registergeneral extends State<Registergeneral> {
                             onChanged: (bool? value) {
                               setState(() {
                                 checkdosen = value!;
+                                checkmahas = false;
                               });
                             })),
                     Text(
@@ -363,7 +362,7 @@ class _Registergeneral extends State<Registergeneral> {
                           height: 0),
                     ),
                     Container(
-                      width: 60,
+                      width: 70,
                       height: 10,
                       color: transparant,
                     ),
@@ -376,6 +375,7 @@ class _Registergeneral extends State<Registergeneral> {
                             onChanged: (bool? value) {
                               setState(() {
                                 checkmahas = value!;
+                                checkdosen = false;
                               });
                             })),
                     Text(
@@ -411,8 +411,58 @@ class _Registergeneral extends State<Registergeneral> {
                     ),
                     onPressed: () async {
                       setState(() {
-                        Navigator.of(context).push(new MaterialPageRoute(
-                            builder: (BuildContext context) => new Register()));
+                        if (controllerAlamat.text == "" ||
+                            controllerHp.text == "" ||
+                            controllerId.text == "" ||
+                            controllerName.text == "" ||
+                            controllerPassword.text == "" ||
+                            controllerUsername.text == "" ||
+                            checkdosen == false && checkmahas == false) {
+                          showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                    title: Text('Data Belum Lengkap'),
+                                    content:
+                                        Text("Pastikan Data Sudah Lengkap"),
+                                  ));
+                        } else if (controllerAlamat.text == "" ||
+                            controllerHp.text != "" &&
+                                controllerId.text != "" &&
+                                controllerName.text != "" &&
+                                controllerPassword.text != "" &&
+                                controllerUsername.text != "" &&
+                                checkdosen == true &&
+                                checkmahas == false) {
+                          StartRegister();
+                          showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                      title: Text('Berhasil Mendaftar'),
+                                      content: Text(
+                                          "Anda telah berhasil Mendaftar, silahkan tunggu proses verifikasi"),
+                                      actions: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                  new MaterialPageRoute(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          new Login()));
+                                            },
+                                            child: Text(
+                                              'Ok',
+                                              style: TextStyle(
+                                                  fontFamily: 'Montserrat'),
+                                            )),
+                                      ]));
+                        } else {
+                          Navigator.of(context).push(new MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  new RegisterPhoto()));
+                          // Navigator.of(context).pop(new MaterialPageRoute(
+                          //     builder: (BuildContext context) =>
+                          //         new Registergeneral()));
+                        }
                       });
                     },
                     child: Text(

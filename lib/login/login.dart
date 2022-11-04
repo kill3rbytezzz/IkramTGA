@@ -3,11 +3,12 @@ import 'dart:convert';
 import '/register/register.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/gestures.dart';
+import '../main.dart';
 
 void main() {
   runApp(new MaterialApp(
-    title: "Device Monitoring",
-    home: new Login(),
+    title: "TGA APP",
+    home: new Home(),
   ));
 }
 
@@ -193,12 +194,13 @@ class _Login extends State<Login> {
                   color: transparant,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      width: 25,
-                      height: 10,
-                      color: transparant,
-                    ),
+                    // Container(
+                    //   width: 25,
+                    //   height: 10,
+                    //   color: transparant,
+                    // ),
                     Theme(
                         data: Theme.of(context)
                             .copyWith(unselectedWidgetColor: pnl),
@@ -208,6 +210,7 @@ class _Login extends State<Login> {
                             onChanged: (bool? value) {
                               setState(() {
                                 checkdosen = value!;
+                                checkmahas = false;
                               });
                             })),
                     Text(
@@ -220,7 +223,7 @@ class _Login extends State<Login> {
                           height: 0),
                     ),
                     Container(
-                      width: 60,
+                      width: 100,
                       height: 10,
                       color: transparant,
                     ),
@@ -233,6 +236,7 @@ class _Login extends State<Login> {
                             onChanged: (bool? value) {
                               setState(() {
                                 checkmahas = value!;
+                                checkdosen = false;
                               });
                             })),
                     Text(

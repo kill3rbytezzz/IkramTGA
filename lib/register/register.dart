@@ -5,13 +5,18 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/gestures.dart';
 import 'registergeneral.dart';
+import 'package:intl/intl.dart';
 
-void main() {
-  runApp(new MaterialApp(
-    title: "Device Monitoring",
-    home: new Register(),
-  ));
-}
+// void main() {
+//   runApp(new MaterialApp(
+//     title: "Device Monitoring",
+//     home: new Register(),
+//   ));
+// }
+
+var Email;
+var Birthday;
+var Gender;
 
 class Register extends StatefulWidget {
   @override
@@ -26,16 +31,15 @@ class _Register extends State<Register> {
 
   // Backend PHP
   StartLogin() async {
-    String url = "http://localhost/login.php";
+    Email = controllerEmail.text;
+    Birthday = controllerBirthday.text;
+    Gender = controllerGender.text;
+  }
 
-    // Manggil Value Database
-
-    final response = await http.post(Uri.parse(url), body: {
-      "username": controllerEmail.text,
-      "password": controllerBirthday.text,
-      "gender": controllerGender.text
-    });
-    var jsondata = json.decode(response.body);
+  @override
+  void initState() {
+    controllerBirthday.text = '';
+    super.initState();
   }
 
 // Widget Layar
@@ -101,7 +105,7 @@ class _Register extends State<Register> {
                           height: 60,
                           color: Color.fromARGB(0, 0, 0, 0),
                           child: TextField(
-                            controller: controllerEmail,
+                            controller: Email,
                             decoration: InputDecoration(
                               // label: 'username',
                               border: InputBorder.none,
@@ -198,6 +202,33 @@ class _Register extends State<Register> {
                                   fontSize: 15,
                                   height: 2.4),
                             ),
+                            readOnly:
+                                true, //set it true, so that user will not able to edit text
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(
+                                      2000), //DateTime.now() - not to allow to choose before today.
+                                  lastDate: DateTime(2101));
+
+                              if (pickedDate != null) {
+                                print(
+                                    pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                                print(
+                                    formattedDate); //formatted date output using intl package =>  2021-03-16
+                                //you can implement different kind of Date Format here according to your requirement
+
+                                setState(() {
+                                  controllerBirthday.text =
+                                      formattedDate; //set output date to TextField value.
+                                });
+                              } else {
+                                print("Date is not selected");
+                              }
+                            },
                           ),
                         ),
                       ],
@@ -232,7 +263,7 @@ class _Register extends State<Register> {
                           height: 60,
                           color: Color.fromARGB(0, 0, 0, 0),
                           child: TextField(
-                            controller: controllerGender,
+                            controller: Gender,
                             decoration: InputDecoration(
                               // label: 'username',
                               border: InputBorder.none,
@@ -293,9 +324,19 @@ class _Register extends State<Register> {
                     ),
                     onPressed: () async {
                       setState(() {
-                        Navigator.of(context).push(new MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                new Registergeneral()));
+                        if (Email == "" || Birthday == "" || Gender == "") {
+                          showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                    title: Text('Data Belum Lengkap'),
+                                    content:
+                                        Text("Pastikan Data Sudah Lengkap"),
+                                  ));
+                        } else {
+                          Navigator.of(context).push(new MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  new Registergeneral()));
+                        }
                       });
                     },
                     child: Text(
